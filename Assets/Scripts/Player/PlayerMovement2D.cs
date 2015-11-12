@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PlayerMovement2D : MonoBehaviour
 {
-    private const float kVelocitySmoothingFactor = 0.2f;
+    private const float kVelocitySmoothingFactor = 1f;
+
     private static Vector3 position;
     private bool isAccelerating;
     private Rigidbody body;
@@ -20,6 +21,8 @@ public class PlayerMovement2D : MonoBehaviour
     {
         this.body = this.GetComponent<Rigidbody>();
         this.StartCoroutine("BringPlayerBack");
+        this.StartCoroutine("BringPlayerDown");
+
     }
 
  
@@ -30,15 +33,10 @@ public class PlayerMovement2D : MonoBehaviour
         {
             this.body.AddForce(new Vector3(0.1f, 2f), ForceMode.VelocityChange);
         }
-        this.ClampLocation();
-    }
-
-    private void ClampLocation()
-    {
-        
 
         this.body.velocity = new Vector3(this.body.velocity.x, Mathf.Clamp(this.body.velocity.y, -11f, 8f));
     }
+
 
     IEnumerator BringPlayerBack()
     {
@@ -46,8 +44,9 @@ public class PlayerMovement2D : MonoBehaviour
         {
             if (transform.position.x < 9f)
             {
-                this.body.velocity = Vector3.right;
-                this.transform.position = new Vector3(this.transform.position.x + kVelocitySmoothingFactor, this.transform.position.y);  
+
+                this.body.velocity = new Vector3(this.body.velocity.x + 0.2f, this.transform.position.y);  
+
             }
             else if (transform.position.x > 17f)
             {
@@ -56,6 +55,20 @@ public class PlayerMovement2D : MonoBehaviour
             yield return null;
         }
     }
+
+
+    IEnumerator BringPlayerDown()
+    {
+        for (;;)
+        {
+            if (transform.position.y > 9f)
+            {
+                this.body.velocity = new Vector3(this.body.velocity.x, - kVelocitySmoothingFactor);
+            }
+            yield return null;
+        }
+    }
+
 
     public void BeginAcceleration()
     {
