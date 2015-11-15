@@ -1,49 +1,67 @@
 fileFormatVersion: 2
-guid: 57937cf245bce1c4f8d2b4371884cea1
-timeCreated: 1446993699
+guid: 879b1127a99c09046a275ff09b45166d
+timeCreated: 1447619538
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: Cube
-    100002: Cube_001
-    100004: Cube_002
-    100006: Cube_003
-    100008: Cube_004
-    100010: Cube_005
-    100012: Cube_006
-    100014: //RootNode
-    400000: Cube
-    400002: Cube_001
-    400004: Cube_002
-    400006: Cube_003
-    400008: Cube_004
-    400010: Cube_005
-    400012: Cube_006
-    400014: //RootNode
-    2300000: Cube
-    2300002: Cube_001
-    2300004: Cube_002
-    2300006: Cube_003
-    2300008: Cube_004
-    2300010: Cube_005
-    2300012: Cube_006
-    3300000: Cube
-    3300002: Cube_001
-    3300004: Cube_002
-    3300006: Cube_003
-    3300008: Cube_004
-    3300010: Cube_005
-    3300012: Cube_006
-    4300000: Cube_005
-    4300002: Cube_006
-    4300004: Cube_004
-    4300006: Cube_003
-    4300008: Cube_002
-    4300010: Cube_001
-    4300012: Cube
-    7400000: Default Take
-    9500000: //RootNode
+    100000: BoatBot
+    100002: //RootNode
+    100004: BoatTop
+    100006: Glass
+    100008: Hand Right
+    100010: Hand Right.001
+    100012: Head
+    100014: JetForward
+    100016: JetUpHigher
+    100018: JetUpLower
+    100020: Plane
+    100022: Torso
+    400000: BoatBot
+    400002: //RootNode
+    400004: BoatTop
+    400006: Glass
+    400008: Hand Right
+    400010: Hand Right.001
+    400012: Head
+    400014: JetForward
+    400016: JetUpHigher
+    400018: JetUpLower
+    400020: Plane
+    400022: Torso
+    2300000: BoatBot
+    2300002: BoatTop
+    2300004: Glass
+    2300006: Hand Right
+    2300008: Hand Right.001
+    2300010: Head
+    2300012: JetForward
+    2300014: JetUpHigher
+    2300016: JetUpLower
+    2300018: Plane
+    2300020: Torso
+    3300000: BoatBot
+    3300002: BoatTop
+    3300004: Glass
+    3300006: Hand Right
+    3300008: Hand Right.001
+    3300010: Head
+    3300012: JetForward
+    3300014: JetUpHigher
+    3300016: JetUpLower
+    3300018: Plane
+    3300020: Torso
+    4300000: Hand Right.001
+    4300002: Plane
+    4300004: Hand Right
+    4300006: Head
+    4300008: Torso
+    4300010: BoatBot
+    4300012: BoatTop
+    4300014: Glass
+    4300016: JetForward
+    4300018: JetUpHigher
+    4300020: JetUpLower
   materials:
     importMaterials: 1
     materialName: 0
@@ -102,7 +120,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

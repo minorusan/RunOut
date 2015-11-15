@@ -1,42 +1,15 @@
 fileFormatVersion: 2
-guid: 8dfd6550bd2059a47b5d42370e4ea445
-timeCreated: 1447351226
+guid: c700dbee60a27ee4da22af9f72afdbc5
+timeCreated: 1447620526
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: BoatBot
-    100004: BoatTop
-    100006: Glass
-    100008: JetForward
-    100010: JetUpHigher
-    100012: JetUpLower
     400000: //RootNode
-    400002: BoatBot
-    400004: BoatTop
-    400006: Glass
-    400008: JetForward
-    400010: JetUpHigher
-    400012: JetUpLower
-    2300000: BoatBot
-    2300002: BoatTop
-    2300004: Glass
-    2300006: JetForward
-    2300008: JetUpHigher
-    2300010: JetUpLower
-    3300000: BoatBot
-    3300002: BoatTop
-    3300004: Glass
-    3300006: JetForward
-    3300008: JetUpHigher
-    3300010: JetUpLower
-    4300000: BoatTop
-    4300002: JetUpHigher
-    4300004: JetUpLower
-    4300006: JetForward
-    4300008: Glass
-    4300010: BoatBot
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube
   materials:
     importMaterials: 1
     materialName: 0
