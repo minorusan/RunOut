@@ -42,6 +42,7 @@ public class Meteor : MonoBehaviour {
         if (target.gameObject.tag.Equals("Player") == true)
         {
             target.rigidbody.AddExplosionForce(this.ExplosiveForce, this.transform.position, this.ExplosiveRadius);
+            target.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             this.gameObject.SetActive(false);
         }
     }
