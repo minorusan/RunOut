@@ -7,11 +7,6 @@ public class GameSceneController : MonoBehaviour {
 
     private static List<Meteor> meteors = new List<Meteor>();
 
-	// Use this for initialization
-	void Start () {
-	    
-	}
-
     public static void AddMeteorToList(Meteor meteor)
     {
         meteors.Add(meteor);
