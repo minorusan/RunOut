@@ -10,6 +10,7 @@ public class Meteor : MonoBehaviour {
     public AudioClip explosionSound;
 
     private Rigidbody body;
+    private Vector3 initialPosition;
     private MeshRenderer meshRenderer;
 
     void Awake()
@@ -17,12 +18,13 @@ public class Meteor : MonoBehaviour {
         this.body = GetComponent<Rigidbody>();
         this.meshRenderer = GetComponent<MeshRenderer>();
         GameSceneController.AddMeteorToList(this);
+        this.initialPosition = this.transform.position;
         this.Reset();
     }
 
 	public void Reset ()
     {
-        this.transform.position = new Vector3(30, PlayerMovement2D.PlayerPosition.y , PlayerMovement2D.PlayerPosition.z);
+        this.transform.position = new Vector3(this.initialPosition.x, this.initialPosition.y, PlayerMovement2D.PlayerPosition.z);
         this.body.velocity = Vector3.zero;
 
         this.transform.rotation = new Quaternion();
@@ -36,7 +38,7 @@ public class Meteor : MonoBehaviour {
     {
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, PlayerMovement2D.PlayerPosition.z);
         //this.transform.position = new Vector3(transform.position.x, transform.position.y, PlayerMovement2D.PlayerPosition.z);
-        if (this.transform.position.x < 12)
+        if (this.transform.position.x < -2f)
             this.CheckOutOfScreen();
 	}
 
@@ -47,6 +49,8 @@ public class Meteor : MonoBehaviour {
             Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
 
             AudioSource.PlayClipAtPoint(this.explosionSound, this.transform.position);
+
+            target.rigidbody.velocity = Vector3.zero;
 
             target.rigidbody.AddExplosionForce(this.ExplosiveForce, this.transform.position, this.ExplosiveRadius);
             target.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
