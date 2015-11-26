@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Utility;
 
-public class Meteor : MonoBehaviour {
+public class Meteor : MonoBehaviour
+{
 
     public float ExplosiveForce = 20.0f;
     public float ExplosiveRadius = 30.0f;
@@ -9,11 +11,14 @@ public class Meteor : MonoBehaviour {
     public GameObject exlposion;
     public AudioClip explosionSound;
 
+
+    #region Private
     private Rigidbody body;
     private Vector3 initialPosition;
-    private MeshRenderer meshRenderer;
+    private MeshRenderer meshRenderer; 
+    #endregion
 
-    void Awake()
+    private void Awake()
     {
         this.body = GetComponent<Rigidbody>();
         this.meshRenderer = GetComponent<MeshRenderer>();
@@ -22,9 +27,9 @@ public class Meteor : MonoBehaviour {
         this.Reset();
     }
 
-	public void Reset ()
+    public void Reset()
     {
-        this.transform.position = new Vector3(this.initialPosition.x, this.initialPosition.y, PlayerMovement2D.PlayerPosition.z);
+        this.transform.position = new Vector3(this.initialPosition.x, this.initialPosition.y, this.initialPosition.z);
         this.body.velocity = Vector3.zero;
 
         this.transform.rotation = new Quaternion();
@@ -32,19 +37,36 @@ public class Meteor : MonoBehaviour {
 
         this.body.AddForce(new Vector3(-10f, 0), ForceMode.VelocityChange);
     }
-	
-	// Update is called once per frame
-	void LateUpdate ()
+
+
+    private void LateUpdate()
     {
-        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, PlayerMovement2D.PlayerPosition.z);
-        //this.transform.position = new Vector3(transform.position.x, transform.position.y, PlayerMovement2D.PlayerPosition.z);
+        Vector3 movementVector = Vector3.zero;
+
+        switch (GameSceneController.currentCameraState)
+        {
+            case CurrentCameraState.CameraStateSide:
+                movementVector = new Vector3(this.transform.position.x, this.transform.position.y, PlayerMovementController.PlayerPosition.z);
+                break;
+            case CurrentCameraState.CameraStateBack:
+                movementVector = new Vector3(this.transform.position.x, this.transform.position.y, this.initialPosition.z);
+                break;
+            case CurrentCameraState.CameraStateUp:
+                movementVector = new Vector3(this.transform.position.x, PlayerMovementController.PlayerPosition.y, this.transform.position.z);
+                break;
+            default:
+                break;
+        }
+
+        this.transform.position = movementVector;
+
         if (this.transform.position.x < -2f)
             this.CheckOutOfScreen();
-	}
+    }
 
     void OnCollisionEnter(Collision target)
     {
-        if (target.gameObject.tag.Equals("Player") == true)
+        if (target.gameObject.tag.Equals(Strings.kPLayerTag) == true)
         {
             Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
 
