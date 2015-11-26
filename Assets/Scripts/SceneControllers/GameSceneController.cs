@@ -5,14 +5,26 @@ using System.Linq;
 using RunOut.Utils;
 using RunOut.Core.GameObjects;
 using RunOut.Core.GameObjects.Bonuses;
+using RunOut.Core.Utilities;
 
 namespace RunOut.Core.Controllers
 {
     public class GameSceneController : MonoBehaviour
     {
+        public static PlayerStats playerStats;
+
         #region Private
         private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
         #endregion
+
+
+
+        private void Awake()
+        {
+            gameObjects = new List<MovingGameObject>();
+            playerStats.ResetPlayerStats();
+        }
+
 
         public static void AddGameObjectToList(MovingGameObject gameObject)
         {
@@ -27,19 +39,13 @@ namespace RunOut.Core.Controllers
                 meteor.Reset();
             }
 
+            Tools.PerformSuperSpeedCheck();
 
-            if (SuperSpeedBonus.superSpeedTimer > 0)
+            if (playerStats.Health <= 0)
             {
-                SuperSpeedBonus.superSpeedTimer -= Time.deltaTime;
+                Debug.LogError("Game ended");
+                Application.LoadLevelAsync("Game");
             }
-            else
-            {
-                MovingGameObject.speedModifier = MovingGameObject.kDefaultSpeedModifier;
-                Debug.Log("Turned off super speed");
-            }
-
-
-
         }
     }
 }

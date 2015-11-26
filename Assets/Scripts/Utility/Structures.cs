@@ -10,4 +10,42 @@ namespace RunOut.Utils
     {
         public float xMax, yMax, xMin, yMin, zMin, zMax;
     }
+
+    [System.Serializable]
+    public struct PlayerStats
+    {
+        private const int kMaxPlayerHealth = 30;
+        private int health;
+
+        public bool IsImmune { get; set; }
+
+        public int Health
+        {
+            get
+            {
+                return health;
+            }
+
+            set
+            {
+                health = value;
+                if (health > kMaxPlayerHealth)
+                {
+                    health = kMaxPlayerHealth;
+                }
+
+                if (health < 0)
+                {
+                    health = 0;
+                }
+            }
+        }
+
+        internal void ResetPlayerStats()
+        {
+            this.Health = kMaxPlayerHealth;
+            this.IsImmune = false;
+        }
+    }
+
 }

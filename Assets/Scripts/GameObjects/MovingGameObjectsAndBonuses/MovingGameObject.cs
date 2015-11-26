@@ -19,7 +19,7 @@ namespace RunOut.Core.GameObjects
         private MeshRenderer meshRenderer;
         #endregion
 
-        private void Awake()
+        private void Start()
         {
             this.body = GetComponent<Rigidbody>();
             this.meshRenderer = GetComponent<MeshRenderer>();
@@ -41,7 +41,7 @@ namespace RunOut.Core.GameObjects
         }
 
 
-        private void LateUpdate()
+        private void FixedUpdate()
         {
             Vector3 movementVector = Vector3.zero;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using System.Text;
 using RunOut.Utils;
+using RunOut.Core.Controllers;
 
 namespace RunOut.Core.GameObjects
 {
@@ -19,9 +20,15 @@ namespace RunOut.Core.GameObjects
 
         void OnCollisionEnter(Collision target)
         {
-            if (target.gameObject.tag.Equals(Strings.kPLayerTag) == true)
+            if (target.gameObject.tag.Equals(Strings.kPLayerTag))
             {
                 Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
+
+                if (!GameSceneController.playerStats.IsImmune)
+                {
+                    GameSceneController.playerStats.Health--;
+                }
+               
 
                 AudioSource.PlayClipAtPoint(this.explosionSound, this.transform.position);
 
