@@ -2,6 +2,7 @@
 using System.Collections;
 using RunOut.Core.Controllers;
 using RunOut.Utils;
+using RunOut.Core.GameObjects.Bonuses;
 
 namespace RunOut.Core.GameObjects
 {
@@ -37,7 +38,15 @@ namespace RunOut.Core.GameObjects
             this.transform.rotation = new Quaternion();
             this.body.angularVelocity = Vector3.forward;
 
-            this.body.AddForce(new Vector3(-(this.objectMovementSpeed + speedModifier), 0), ForceMode.VelocityChange);
+            this.body.AddForce(new Vector3(-this.objectMovementSpeed, 0), ForceMode.VelocityChange);
+        }
+
+        private void Update()
+        {
+            if (SuperSpeedBonus.superSpeedTimer > 0)
+            {
+                this.body.AddForce(new Vector3(-speedModifier, 0), ForceMode.VelocityChange);
+            }
         }
 
 

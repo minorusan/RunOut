@@ -10,7 +10,7 @@ namespace RunOut.Core.GameObjects.Bonuses
 {
     class SuperSpeedBonus:MonoBehaviour
     {
-        private const float kSuperSpeedConstant = 40f;
+        private const float kSuperSpeedConstant = 1f;
         public static float superSpeedTimer;
 
         private void Awake()

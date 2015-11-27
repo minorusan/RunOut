@@ -24,9 +24,19 @@ namespace RunOut.Core.GameObjects
             {
                 Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
 
-                if (!GameSceneController.playerStats.IsImmune)
+#warning REFACTOR
+                if (!GameSceneController.playerStats.IsImmune && !GameSceneController.playerStats.IsShieldEnabled)
                 {
                     GameSceneController.playerStats.Health--;
+                }
+                else if (GameSceneController.playerStats.IsVampiricEnabled)
+                {
+                    GameSceneController.playerStats.Health++;
+                    GameSceneController.playerStats.IsVampiricEnabled = false;
+                }
+                else
+                {
+                    GameSceneController.playerStats.IsShieldEnabled = false;
                 }
                
 

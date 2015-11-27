@@ -17,6 +17,8 @@ namespace RunOut.Utils
         private const int kMaxPlayerHealth = 30;
         private int health;
 
+        public bool IsShieldEnabled { get; set; }
+
         public bool IsImmune { get; set; }
 
         public int Health
@@ -40,6 +42,8 @@ namespace RunOut.Utils
                 }
             }
         }
+
+        public bool IsVampiricEnabled { get; set; }
 
         internal void ResetPlayerStats()
         {
