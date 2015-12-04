@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Text;
 using RunOut.Utils;
 using RunOut.Core.Controllers;
+using RunOut.Core.Utilities;
 
 namespace RunOut.Core.GameObjects
 {
@@ -23,7 +24,7 @@ namespace RunOut.Core.GameObjects
             if (target.gameObject.tag.Equals(Strings.kPLayerTag))
             {
                 Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
-
+                
 #warning REFACTOR
                 if (!GameSceneController.playerStats.IsImmune && !GameSceneController.playerStats.IsShieldEnabled)
                 {
@@ -31,6 +32,7 @@ namespace RunOut.Core.GameObjects
                 }
                 else if (GameSceneController.playerStats.IsVampiricEnabled)
                 {
+                    Debug.Log("Healed instead of damage");
                     GameSceneController.playerStats.Health++;
                     GameSceneController.playerStats.IsVampiricEnabled = false;
                 }
@@ -38,8 +40,8 @@ namespace RunOut.Core.GameObjects
                 {
                     GameSceneController.playerStats.IsShieldEnabled = false;
                 }
-               
 
+                Tools.DisposeBonus();
                 AudioSource.PlayClipAtPoint(this.explosionSound, this.transform.position);
 
                 target.rigidbody.velocity = Vector3.zero;

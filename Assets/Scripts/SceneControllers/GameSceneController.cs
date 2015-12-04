@@ -12,12 +12,13 @@ namespace RunOut.Core.Controllers
     public class GameSceneController : MonoBehaviour
     {
         public static PlayerStats playerStats;
+        public GameObject speedStars;
 
         #region Private
         private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
         #endregion
 
-
+       
 
         private void Awake()
         {

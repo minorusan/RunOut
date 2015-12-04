@@ -13,6 +13,8 @@ namespace RunOut.Core.GameObjects.Bonuses
         private const float kSuperSpeedConstant = 1f;
         public static float superSpeedTimer;
 
+        public GameObject stars;
+
         private void Awake()
         {
             superSpeedTimer = -3;
@@ -22,6 +24,7 @@ namespace RunOut.Core.GameObjects.Bonuses
         {
             if (target.gameObject.tag.Equals(Strings.kPLayerTag))
             {
+                Instantiate(stars);
                 MovingGameObject.speedModifier = kSuperSpeedConstant;
                 GameSceneController.playerStats.IsImmune = true;
                 superSpeedTimer = 5f;

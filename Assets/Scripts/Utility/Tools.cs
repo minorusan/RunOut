@@ -11,6 +11,23 @@ namespace RunOut.Core.Utilities
 {
     class Tools
     {
+        static GameObject bonus;
+
+        public static void RegisterBonus(GameObject effect)
+        {
+            GameObject.Destroy(bonus);
+            bonus = effect;
+        }
+
+        public static void DisposeBonus()
+        {
+            if (bonus != null)
+            {
+                bonus.GetComponent<BonusExplosionEffect>().ActivateExplosion();
+            }
+        }
+
+
         public static void PerformSuperSpeedCheck()
         {
             if (SuperSpeedBonus.superSpeedTimer > 0)
