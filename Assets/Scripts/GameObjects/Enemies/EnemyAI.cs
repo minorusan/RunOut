@@ -6,16 +6,17 @@ using RunOut.Utils;
 public class EnemyAI : MonoBehaviour {
 
     private const float kDefaultEnemyTrackingSpeed = 0.1f;
+    private const float kDefaultActivityTime = 6f;
 
-   
-    public float EnemyTrakingSpeedModifier;
+
+    public float EnemyTrakingSpeedModifier = kDefaultEnemyTrackingSpeed;
+    public float ActivityTime = kDefaultActivityTime;
 
     private Rigidbody body;
     private float previousVelocity;
     private float previousZVelocity;
     // Use this for initialization
     void Start () {
-        this.EnemyTrakingSpeedModifier = kDefaultEnemyTrackingSpeed;
         this.body = this.GetComponent<Rigidbody>();
 	}
 	
@@ -23,6 +24,9 @@ public class EnemyAI : MonoBehaviour {
 	void Update () {
         var selfPosition = this.transform.position;
         var playerPosition = PlayerMovementController.PlayerPosition;
+
+        this.ActivityTime -= Time.deltaTime;
+       
 
         switch (CameraController.currentCameraState)
         {
@@ -80,6 +84,16 @@ public class EnemyAI : MonoBehaviour {
                 };
             default:
                 break;
+        }
+
+        if (this.ActivityTime <= 0)
+        {
+            this.body.AddForce(Vector3.up, ForceMode.VelocityChange);
+        }
+        if (this.ActivityTime <= -5f)
+        {
+            this.gameObject.SetActive(false);
+            Debug.Log("Deactivated UFO");
         }
     }
 
