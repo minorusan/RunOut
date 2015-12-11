@@ -8,6 +8,7 @@ namespace RunOut.Core.GameObjects.Bonuses
     public class ShieldBonus : MonoBehaviour
     {
         public GameObject shieldEffect;
+        public AudioClip shieldTakenSound;
 
         private void OnCollisionEnter(Collision target)
         {
@@ -15,6 +16,7 @@ namespace RunOut.Core.GameObjects.Bonuses
             {
                 Instantiate(this.shieldEffect, PlayerMovementController.PlayerPosition, Quaternion.Euler(Vector3.zero));
                 this.shieldEffect.GetComponent<BonusExplosionEffect>().effectColour = Color.cyan ;
+                AudioSource.PlayClipAtPoint(this.shieldTakenSound, this.transform.position);
                 GameSceneController.playerStats.IsShieldEnabled = true;
                 Debug.Log("Shield enabled");
                 this.gameObject.SetActive(false);

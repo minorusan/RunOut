@@ -12,6 +12,7 @@ namespace RunOut.Core.GameObjects.Bonuses
     {
         private const float kSuperSpeedConstant = 1f;
         public static float superSpeedTimer;
+        public AudioClip bonusTakeSound;
 
         public GameObject stars;
 
@@ -25,6 +26,8 @@ namespace RunOut.Core.GameObjects.Bonuses
             if (target.gameObject.tag.Equals(Strings.kPLayerTag))
             {
                 Instantiate(stars);
+                this.GetComponent<AudioSource>().PlayOneShot(this.bonusTakeSound);
+                AudioSource.PlayClipAtPoint(this.bonusTakeSound, this.transform.position);
                 MovingGameObject.speedModifier = kSuperSpeedConstant;
                 GameSceneController.playerStats.IsImmune = true;
                 superSpeedTimer = 5f;

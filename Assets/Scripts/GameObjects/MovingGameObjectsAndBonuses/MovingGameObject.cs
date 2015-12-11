@@ -83,9 +83,7 @@ namespace RunOut.Core.GameObjects
             {
                 this.gameObject.SetActive(false);
             }
-
         }
-
     }
 }
 
