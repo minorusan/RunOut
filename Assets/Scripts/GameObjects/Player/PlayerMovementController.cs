@@ -12,6 +12,9 @@ namespace RunOut.Core.Controllers
         public AudioClip accelerationSoundUp;
         public AudioClip accelerationSoundDown;
 
+		public GameObject regularEngine;
+		public GameObject nitroEngine;
+
         public float speed = 0.1F;
 
         public Boundary boundary;
@@ -88,6 +91,7 @@ namespace RunOut.Core.Controllers
         private void LateUpdate()
         {
             transform.rotation = this.initialRotation;
+			this.body.angularVelocity = Vector3.zero;
         }
 
     }
