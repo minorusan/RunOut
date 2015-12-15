@@ -35,7 +35,7 @@ namespace RunOut.Core.GameObjects.Bonuses
                 this.GetComponent<AudioSource>().PlayOneShot(this.bonusTakeSound);
                 AudioSource.PlayClipAtPoint(this.bonusTakeSound, this.transform.position);
                 MovingGameObject.speedModifier = kSuperSpeedConstant;
-                GameSceneController.playerStats.IsImmune = true;
+                PlayerStats.GetInstance().IsImmune = true;
                 superSpeedTimer = 5f;
                 this.gameObject.SetActive(false);
             }

@@ -9,7 +9,7 @@ public class HealthKitBonus : MonoBehaviour {
     {
         if (target.gameObject.tag.Equals(Strings.kPLayerTag))
         {
-            GameSceneController.playerStats.Health++;
+            PlayerStats.GetInstance().Health++;
             this.gameObject.SetActive(false);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using RunOut.Core.Controllers;
 using RunOut.Core.GameObjects;
 using RunOut.Core.GameObjects.Bonuses;
+using RunOut.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,30 @@ namespace RunOut.Core.Utilities
             if (SuperSpeedBonus.superSpeedTimer > 0)
             {
                 SuperSpeedBonus.superSpeedTimer -= Time.deltaTime;
-                GameSceneController.playerStats.IsImmune = true;
+                PlayerStats.GetInstance().IsImmune = true;
             }
             else if (SuperSpeedBonus.superSpeedTimer < 0)
             {
-                GameSceneController.playerStats.IsImmune = false;
+                PlayerStats.GetInstance().IsImmune = false;
                 MovingGameObject.speedModifier = MovingGameObject.kDefaultSpeedModifier;
             }
         }
 
+        internal static void DamagePlayer(int v)
+        {
+            if (!PlayerStats.GetInstance().IsImmune && !PlayerStats.GetInstance().IsShieldEnabled)
+            {
+                PlayerStats.GetInstance().Health -= v;
+                Handheld.Vibrate();
+            }
+            else
+            {
+                PlayerStats.GetInstance().ShieldValue -= v;
+                if (!PlayerStats.GetInstance().IsShieldEnabled)
+                {
+                    Tools.DisposeBonus();
+                }
+            }
+        }
     }
 }

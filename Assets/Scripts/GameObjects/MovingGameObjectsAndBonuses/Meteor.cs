@@ -11,10 +11,10 @@ namespace RunOut.Core.GameObjects
 {
     class Meteor : MonoBehaviour
     {
+        private const int kDefaultMeteorDamage = 50;
+
         public float ExplosiveForce = 20.0f;
         public float ExplosiveRadius = 30.0f;
-
-       
 
         public GameObject exlposion;
         public AudioClip explosionSound;
@@ -24,31 +24,16 @@ namespace RunOut.Core.GameObjects
             if (target.gameObject.tag.Equals(Strings.kPLayerTag))
             {
                 Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
-                
-#warning REFACTOR
-                if (!GameSceneController.playerStats.IsImmune && !GameSceneController.playerStats.IsShieldEnabled)
-                {
-                    GameSceneController.playerStats.Health--;
-                    Handheld.Vibrate();
-                }
-                else if (GameSceneController.playerStats.IsVampiricEnabled)
-                {
-                    Debug.Log("Healed instead of damage");
-                    GameSceneController.playerStats.Health++;
-                    GameSceneController.playerStats.IsVampiricEnabled = false;
-                }
-                else
-                {
-                    GameSceneController.playerStats.IsShieldEnabled = false;
-                }
 
-                Tools.DisposeBonus();
+                Tools.DamagePlayer(kDefaultMeteorDamage);
+
+                
                 AudioSource.PlayClipAtPoint(this.explosionSound, this.transform.position);
 
                 target.rigidbody.velocity = Vector3.zero;
 
                 target.rigidbody.AddExplosionForce(this.ExplosiveForce, this.transform.position, this.ExplosiveRadius);
-                
+
                 target.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                 this.gameObject.SetActive(false);
             }
