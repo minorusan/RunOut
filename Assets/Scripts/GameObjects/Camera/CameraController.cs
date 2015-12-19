@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RunOut.Core.Controllers;
 
 namespace RunOut.Utils
 {
@@ -9,6 +10,10 @@ namespace RunOut.Utils
         private readonly Vector3 kCameraBackRotationAngle = new Vector3(0, 90, 0);
         private readonly Vector3 kCameraTopRotationAngle = new Vector3(90, 0, 0);
         private readonly Vector3 kCameraSideRotationAngle = Vector3.zero;
+        private readonly Vector3 kCameraDistanceFromPlayer = new Vector3(20, 20, 20);
+
+
+
 
         public static CurrentCameraState currentCameraState;
         public float cameraChangingSpeed = 70f;
@@ -97,13 +102,16 @@ namespace RunOut.Utils
             this.cameraInterpolationStartTime = Time.time;
             this.cameraPositionJourneyLength = Vector3.Distance(previousCameraTransformPosition, requiredCameraTransformPosition);
             this.cameraRotationJourneyLength = Vector3.Distance(previosCameraRotation, requiredCameraRotation);
+
         }
+
+     
         // Use this for initialization
         private void Awake()
         {
             currentCameraState = CurrentCameraState.CameraStateSide;
             this.cameraSideTransformPosition = new Vector3(16, 10, -20);
-            this.cameraBackTransformPosition = new Vector3(-7, 10, -2);
+            this.cameraBackTransformPosition = new Vector3(-15, 10, -2);
             this.cameraTopTransformPosition = new Vector3(16, 33, -2);
         }
 

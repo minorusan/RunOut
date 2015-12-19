@@ -17,7 +17,7 @@ namespace RunOut.Core.GameObjects.Bonuses
                 Instantiate(this.shieldEffect, PlayerMovementController.PlayerPosition, Quaternion.Euler(Vector3.zero));
                 this.shieldEffect.GetComponent<BonusExplosionEffect>().effectColour = Color.cyan ;
                 AudioSource.PlayClipAtPoint(this.shieldTakenSound, this.transform.position);
-                PlayerStats.GetInstance().IsShieldEnabled = true;
+                PlayerStats.GetInstance().ShieldValue = 300;
                 Debug.Log("Shield enabled");
                 this.gameObject.SetActive(false);
             }

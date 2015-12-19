@@ -26,15 +26,10 @@ namespace RunOut.Core.GameObjects
                 Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
 
                 Tools.DamagePlayer(kDefaultMeteorDamage);
-
-                
+   
                 AudioSource.PlayClipAtPoint(this.explosionSound, this.transform.position);
 
-                target.rigidbody.velocity = Vector3.zero;
-
                 target.rigidbody.AddExplosionForce(this.ExplosiveForce, this.transform.position, this.ExplosiveRadius);
-
-                target.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                 this.gameObject.SetActive(false);
             }
         }

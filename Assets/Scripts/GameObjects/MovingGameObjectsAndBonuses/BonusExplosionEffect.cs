@@ -2,6 +2,9 @@
 using System.Collections;
 using RunOut.Core.Controllers;
 using RunOut.Core.Utilities;
+using UnityEngineInternal;
+using UnityEngine.Rendering;
+using UnityEngine.Internal;
 
 public class BonusExplosionEffect : MonoBehaviour {
 
@@ -26,8 +29,10 @@ public class BonusExplosionEffect : MonoBehaviour {
     {
         this.GetComponent<Done_DestroyByTime>().enabled = true;
         this.explosionParticles.startColor = this.effectColour;
-        Component halo = GetComponent("Halo");
-        halo.GetType().GetProperty("enabled").SetValue(halo, false, null);
+
+
+        this.GetComponent<Light>().enabled = false;
+       
         this.explosion.SetActive(true);
     }
 }

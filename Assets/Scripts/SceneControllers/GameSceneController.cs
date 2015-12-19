@@ -6,7 +6,7 @@ using RunOut.Utils;
 using RunOut.Core.GameObjects;
 using RunOut.Core.GameObjects.Bonuses;
 using RunOut.Core.Utilities;
-using UnityEngine.SceneManagement;
+
 
 namespace RunOut.Core.Controllers
 {
@@ -20,14 +20,20 @@ namespace RunOut.Core.Controllers
         private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
         #endregion
 
-       
-
         private void Awake()
         {
             gameObjects = new List<MovingGameObject>();
             PlayerStats.GetInstance().ResetPlayerStats();
             PlayerStats.GetInstance().PlayerHeathEventChanged += GameSceneController_PlayerHeathEventChanged;
             PlayerStats.GetInstance().PlayerShieldEventChanged += GameSceneController_PlayerShieldEventChanged;
+        }
+
+        private void Start()
+        {
+            if (this.shieldBar != null)
+            {
+                this.shieldBar.UpdateWithValue(1);
+            }
         }
 
         private void GameSceneController_PlayerShieldEventChanged(PlayerStatChangedEventArgs args, object sender)
@@ -54,15 +60,18 @@ namespace RunOut.Core.Controllers
             }
 
             Tools.PerformSuperSpeedCheck();
-
-           
-
             if (PlayerStats.GetInstance().Health <= 0)
             {
                 Debug.LogError("Game ended");
                 PlayerStats.GetInstance().PlayerHeathEventChanged -= GameSceneController_PlayerHeathEventChanged;
-                SceneManager.LoadSceneAsync("Game");
+                PlayerStats.GetInstance().PlayerShieldEventChanged -= GameSceneController_PlayerShieldEventChanged;
+                Application.LoadLevelAsync("Game");
             }
+        }
+
+        private void LateUpdate()
+        {
+            GameStats.GetInstance().GainedScore += 0.1;
         }
     }
 }

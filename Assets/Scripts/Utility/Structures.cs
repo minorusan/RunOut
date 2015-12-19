@@ -54,8 +54,10 @@ namespace RunOut.Utils
 
         PlayerStats()
         {
-
+           
         }
+
+       
 
         public static PlayerStats GetInstance()
         {
@@ -75,9 +77,9 @@ namespace RunOut.Utils
                 {
                     PlayerHeathEventChanged(new PlayerStatChangedEventArgs { OldValue = health, NewValue = value }, null);
                 }
-
+                var oldValue = health;
                 health = value;
-
+               
                 if (health > kMaxPlayerHealth)
                 {
                     health = kMaxPlayerHealth;
@@ -86,6 +88,10 @@ namespace RunOut.Utils
                 if (health < 0)
                 {
                     health = 0;
+                }
+                if (this.PlayerHeathEventChanged != null)
+                {
+                    PlayerHeathEventChanged(new PlayerStatChangedEventArgs { OldValue = oldValue, NewValue = health }, null);
                 }
 
             }
@@ -121,5 +127,25 @@ namespace RunOut.Utils
             this.IsImmune = false;
         }
     }
+
+    public class GameStats
+    {
+        private static GameStats instance;
+
+        public double GainedScore { get; set; }
+
+        private GameStats()
+        {
+
+        }
+
+        public static GameStats GetInstance()
+        {
+            return instance == null ? instance = new GameStats() : instance;
+        }
+
+
+    }
+
 
 }

@@ -48,7 +48,6 @@ namespace RunOut.Core.Utilities
             if (!PlayerStats.GetInstance().IsImmune && !PlayerStats.GetInstance().IsShieldEnabled)
             {
                 PlayerStats.GetInstance().Health -= v;
-                Handheld.Vibrate();
             }
             else
             {

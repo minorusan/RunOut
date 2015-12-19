@@ -3,8 +3,11 @@ using System.Collections;
 
 public class MenuSceneController : MonoBehaviour {
 
+    public GameObject gamePanel;
+
 	public void StartGame()
     {
-        Application.LoadLevelAsync("Game");
+        this.gamePanel.SetActive(true);
+        //Application.LoadLevelAsync("Game");
     }
 }
