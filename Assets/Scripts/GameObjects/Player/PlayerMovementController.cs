@@ -7,8 +7,6 @@ namespace RunOut.Core.Controllers
 {
     public class PlayerMovementController : MonoBehaviour
     {
-        private const float kVelocityChangeModifier = 2f;
-
         public AudioClip accelerationSoundUp;
         public AudioClip accelerationSoundDown;
 

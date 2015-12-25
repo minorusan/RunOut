@@ -11,7 +11,7 @@ namespace RunOut.Core.GameObjects
 {
     class Meteor : MonoBehaviour
     {
-        private const int kDefaultMeteorDamage = 50;
+        
 
         public float ExplosiveForce = 20.0f;
         public float ExplosiveRadius = 30.0f;
@@ -25,7 +25,7 @@ namespace RunOut.Core.GameObjects
             {
                 Instantiate(this.exlposion, this.transform.position, this.transform.rotation);
 
-                Tools.DamagePlayer(kDefaultMeteorDamage);
+                Tools.DamagePlayer(Constants.kDefaultMeteorDamage);
    
                 AudioSource.PlayClipAtPoint(this.explosionSound, this.transform.position);
 

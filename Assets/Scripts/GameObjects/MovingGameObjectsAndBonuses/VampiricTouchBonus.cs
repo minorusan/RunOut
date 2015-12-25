@@ -18,9 +18,10 @@ namespace RunOut.Core.GameObjects.Bonuses
                 this.GetComponent<AudioSource>().PlayOneShot(this.bonusTakeSound);
                 Instantiate(this.bloodEffect, PlayerMovementController.PlayerPosition, Quaternion.Euler(Vector3.zero));
                 AudioSource.PlayClipAtPoint(this.bonusTakeSound, this.transform.position);
+
                 this.bloodEffect.GetComponent<BonusExplosionEffect>().effectColour = Color.red;
-                PlayerStats.GetInstance().IsVampiricEnabled = true;
-                Debug.Log("Vampiric enabled");
+
+                Debug.LogError("Vampiric does not work!");
                 this.gameObject.SetActive(false);
             }
         }

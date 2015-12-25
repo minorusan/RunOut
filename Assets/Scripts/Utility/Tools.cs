@@ -12,10 +12,10 @@ namespace RunOut.Core.Utilities
 {
     class Tools
     {
-        static GameObject bonus;
 
-		#region Private
-		private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
+        #region Private
+        static GameObject bonus;
+        private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
 		#endregion
 
 		public static void ResetGameObjects()
@@ -28,6 +28,9 @@ namespace RunOut.Core.Utilities
 			gameObjects.Add(gameObject);
 		}
 
+        /// <summary>
+        /// Relaunches deactivated GOs, that were registered
+        /// </summary>
 		public static void ManageGameObjects()
 		{
 			foreach (var meteor in gameObjects.Where(m => !m.gameObject.activeSelf))
@@ -51,35 +54,25 @@ namespace RunOut.Core.Utilities
             }
         }
 
-
-        public static void PerformSuperSpeedCheck()
+        internal static void DamagePlayer(int inputDamage)
         {
-            if (SuperSpeedBonus.superSpeedTimer > 0)
+            if (Tools.IsPossibleToDamagePlayer())
             {
-                SuperSpeedBonus.superSpeedTimer -= Time.deltaTime;
-                PlayerStats.GetInstance().IsImmune = true;
-            }
-            else if (SuperSpeedBonus.superSpeedTimer < 0)
-            {
-                PlayerStats.GetInstance().IsImmune = false;
-                MovingGameObject.speedModifier = MovingGameObject.kDefaultSpeedModifier;
-            }
-        }
-
-        internal static void DamagePlayer(int v)
-        {
-            if (!PlayerStats.GetInstance().IsImmune && !PlayerStats.GetInstance().IsShieldEnabled)
-            {
-                PlayerStats.GetInstance().Health -= v;
+                PlayerStats.GetInstance().HealthValue -= inputDamage;
             }
             else
             {
-                PlayerStats.GetInstance().ShieldValue -= v;
-                if (!PlayerStats.GetInstance().IsShieldEnabled)
+                PlayerStats.GetInstance().ShieldValue -= inputDamage;
+                if (PlayerStats.GetInstance().ShieldValue <= 0)
                 {
                     Tools.DisposeBonus();
                 }
             }
+        }
+
+        private static bool IsPossibleToDamagePlayer()
+        {
+            return !GameStats.GetInstance().IsSuperSpeedEnabled && PlayerStats.GetInstance().ShieldValue <= 0;
         }
     }
 }

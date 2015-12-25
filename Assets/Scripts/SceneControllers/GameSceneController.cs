@@ -13,6 +13,8 @@ namespace RunOut.Core.Controllers
 {
     public class GameSceneController : MonoBehaviour
     {
+        
+
         public GameObject speedStars;
         public BarSizeChanger healthBar;
         public BarSizeChanger shieldBar;
@@ -21,19 +23,15 @@ namespace RunOut.Core.Controllers
         private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
         #endregion
 
-		private void Awake()
-		{
-			PlayerStats.GetInstance().ResetPlayerStats();
-			PlayerStats.GetInstance().PlayerHeathEventChanged += GameSceneController_PlayerHeathEventChanged;
-			PlayerStats.GetInstance().PlayerShieldEventChanged += GameSceneController_PlayerShieldEventChanged;
-		}
-
         private void Start()
         {
             if (this.shieldBar != null)
             {
                 this.shieldBar.UpdateWithValue(1);
-			} 
+			}
+            PlayerStats.GetInstance().ResetPlayerStats();
+            PlayerStats.GetInstance().PlayerHeathEventChanged += GameSceneController_PlayerHeathEventChanged;
+            PlayerStats.GetInstance().PlayerShieldEventChanged += GameSceneController_PlayerShieldEventChanged;
         }
 
         private void GameSceneController_PlayerShieldEventChanged(PlayerStatChangedEventArgs args, object sender)
@@ -46,26 +44,21 @@ namespace RunOut.Core.Controllers
             this.healthBar.UpdateWithValue(args.NewValue);
         }
 
-       
-
         private void Update()
         {
-           
 			Tools.ManageGameObjects ();
-            Tools.PerformSuperSpeedCheck();
-
-            if (PlayerStats.GetInstance().Health <= 0)
+           
+            if (PlayerStats.GetInstance().HealthValue <= 0)
             {
-                Debug.LogError("Game ended");
                 PlayerStats.GetInstance().PlayerHeathEventChanged -= GameSceneController_PlayerHeathEventChanged;
                 PlayerStats.GetInstance().PlayerShieldEventChanged -= GameSceneController_PlayerShieldEventChanged;
-                SceneManager.LoadSceneAsync("Main");
+                SceneManager.LoadSceneAsync(Strings.kSceneNameMain);
             }
         }
 
         private void LateUpdate()
         {
-            GameStats.GetInstance().GainedScore += 0.1;
+            GameStats.GetInstance().ModifyScoreByValue(Constants.kDefaultScoreGain);
         }
 
 		private void OnDestroy()

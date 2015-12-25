@@ -9,11 +9,9 @@ namespace RunOut.Core.GameObjects
 {
     public class MovingGameObject : MonoBehaviour
     {
-        private const float kBeginScreenChekingFromThisPoint = -2f;
-        public  const float kDefaultSpeedModifier = 0f;
+       
         public static float speedModifier;
         public float objectMovementSpeed = 10f;
-
 
         #region Private
         private Rigidbody body;
@@ -44,7 +42,7 @@ namespace RunOut.Core.GameObjects
 
         private void Update()
         {
-            if (SuperSpeedBonus.superSpeedTimer > 0)
+            if (GameStats.GetInstance().IsSuperSpeedEnabled)
             {
                 this.body.AddForce(new Vector3(-speedModifier, 0), ForceMode.VelocityChange);
             }
@@ -72,7 +70,7 @@ namespace RunOut.Core.GameObjects
 
             this.transform.position = movementVector;
 
-            if (this.transform.position.x < kBeginScreenChekingFromThisPoint)
+            if (this.transform.position.x < Constants.kBeginScreenChekingFromThisPoint)
                 this.CheckOutOfScreen();
         }
 

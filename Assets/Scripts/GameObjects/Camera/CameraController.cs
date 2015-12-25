@@ -6,15 +6,6 @@ namespace RunOut.Utils
 {
     public class CameraController : MonoBehaviour
     {
-        private const int kCameraRotationSpeedModifier = 4;
-        private readonly Vector3 kCameraBackRotationAngle = new Vector3(0, 90, 0);
-        private readonly Vector3 kCameraTopRotationAngle = new Vector3(90, 0, 0);
-        private readonly Vector3 kCameraSideRotationAngle = Vector3.zero;
-        private readonly Vector3 kCameraDistanceFromPlayer = new Vector3(20, 20, 20);
-
-
-
-
         public static CurrentCameraState currentCameraState;
         public float cameraChangingSpeed = 70f;
 
@@ -49,7 +40,7 @@ namespace RunOut.Utils
                 float fracJourney = distCovered / cameraPositionJourneyLength;
                 Camera.main.transform.position = Vector3.Lerp(previousCameraTransformPosition, requiredCameraTransformPosition, fracJourney);
 
-                distCovered *= kCameraRotationSpeedModifier;
+                distCovered *= Constants.kCameraRotationSpeedModifier;
                 fracJourney = distCovered / cameraRotationJourneyLength;
                 Camera.main.transform.rotation = Quaternion.Euler(Vector3.Lerp(previosCameraRotation, requiredCameraRotation, fracJourney));
             }
@@ -66,8 +57,8 @@ namespace RunOut.Utils
                         this.requiredCameraTransformPosition = this.cameraBackTransformPosition;
                         this.previousCameraTransformPosition = this.cameraSideTransformPosition;
 
-                        this.requiredCameraRotation = kCameraBackRotationAngle;
-                        this.previosCameraRotation = kCameraSideRotationAngle;
+                        this.requiredCameraRotation = Constants.kCameraBackRotationAngle;
+                        this.previosCameraRotation = Constants.kCameraSideRotationAngle;
 
                         break;
                     }
@@ -78,8 +69,8 @@ namespace RunOut.Utils
                         this.requiredCameraTransformPosition = this.cameraTopTransformPosition;
                         this.previousCameraTransformPosition = this.cameraBackTransformPosition;
 
-                        this.requiredCameraRotation = kCameraTopRotationAngle;
-                        this.previosCameraRotation = kCameraBackRotationAngle;
+                        this.requiredCameraRotation = Constants.kCameraTopRotationAngle;
+                        this.previosCameraRotation = Constants.kCameraBackRotationAngle;
 
                         break;
                     }
@@ -90,8 +81,8 @@ namespace RunOut.Utils
                         this.requiredCameraTransformPosition = this.cameraSideTransformPosition;
                         this.previousCameraTransformPosition = this.cameraTopTransformPosition;
 
-                        this.requiredCameraRotation = kCameraSideRotationAngle;
-                        this.previosCameraRotation = kCameraTopRotationAngle;
+                        this.requiredCameraRotation = Constants.kCameraSideRotationAngle;
+                        this.previosCameraRotation = Constants.kCameraTopRotationAngle;
 
                         break;
                     }
