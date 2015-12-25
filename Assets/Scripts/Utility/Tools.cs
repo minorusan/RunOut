@@ -14,6 +14,29 @@ namespace RunOut.Core.Utilities
     {
         static GameObject bonus;
 
+		#region Private
+		private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
+		#endregion
+
+		public static void ResetGameObjects()
+		{
+			gameObjects = new List<MovingGameObject> ();
+		}
+
+		public static void AddGameObjectToList(MovingGameObject gameObject)
+		{
+			gameObjects.Add(gameObject);
+		}
+
+		public static void ManageGameObjects()
+		{
+			foreach (var meteor in gameObjects.Where(m => !m.gameObject.activeSelf))
+			{
+				meteor.gameObject.SetActive(true);
+				meteor.Reset();
+			}
+		}
+
         public static void RegisterBonus(GameObject effect)
         {
             GameObject.Destroy(bonus);

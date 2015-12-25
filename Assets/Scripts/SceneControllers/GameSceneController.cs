@@ -6,6 +6,7 @@ using RunOut.Utils;
 using RunOut.Core.GameObjects;
 using RunOut.Core.GameObjects.Bonuses;
 using RunOut.Core.Utilities;
+using UnityEngine.SceneManagement;
 
 
 namespace RunOut.Core.Controllers
@@ -20,20 +21,19 @@ namespace RunOut.Core.Controllers
         private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
         #endregion
 
-        private void Awake()
-        {
-            gameObjects = new List<MovingGameObject>();
-            PlayerStats.GetInstance().ResetPlayerStats();
-            PlayerStats.GetInstance().PlayerHeathEventChanged += GameSceneController_PlayerHeathEventChanged;
-            PlayerStats.GetInstance().PlayerShieldEventChanged += GameSceneController_PlayerShieldEventChanged;
-        }
+		private void Awake()
+		{
+			PlayerStats.GetInstance().ResetPlayerStats();
+			PlayerStats.GetInstance().PlayerHeathEventChanged += GameSceneController_PlayerHeathEventChanged;
+			PlayerStats.GetInstance().PlayerShieldEventChanged += GameSceneController_PlayerShieldEventChanged;
+		}
 
         private void Start()
         {
             if (this.shieldBar != null)
             {
                 this.shieldBar.UpdateWithValue(1);
-            }
+			} 
         }
 
         private void GameSceneController_PlayerShieldEventChanged(PlayerStatChangedEventArgs args, object sender)
@@ -46,26 +46,20 @@ namespace RunOut.Core.Controllers
             this.healthBar.UpdateWithValue(args.NewValue);
         }
 
-        public static void AddGameObjectToList(MovingGameObject gameObject)
-        {
-            gameObjects.Add(gameObject);
-        }
+       
 
         private void Update()
         {
-            foreach (var meteor in gameObjects.Where(m => !m.gameObject.activeSelf))
-            {
-                meteor.gameObject.SetActive(true);
-                meteor.Reset();
-            }
-
+           
+			Tools.ManageGameObjects ();
             Tools.PerformSuperSpeedCheck();
+
             if (PlayerStats.GetInstance().Health <= 0)
             {
                 Debug.LogError("Game ended");
                 PlayerStats.GetInstance().PlayerHeathEventChanged -= GameSceneController_PlayerHeathEventChanged;
                 PlayerStats.GetInstance().PlayerShieldEventChanged -= GameSceneController_PlayerShieldEventChanged;
-                Application.LoadLevelAsync("Game");
+                SceneManager.LoadSceneAsync("Main");
             }
         }
 
@@ -73,6 +67,11 @@ namespace RunOut.Core.Controllers
         {
             GameStats.GetInstance().GainedScore += 0.1;
         }
+
+		private void OnDestroy()
+		{
+			Tools.ResetGameObjects ();
+		}
     }
 }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using RunOut.Core.Controllers;
 using RunOut.Utils;
 using RunOut.Core.GameObjects.Bonuses;
+using RunOut.Core.Utilities;
 
 namespace RunOut.Core.GameObjects
 {
@@ -27,7 +28,7 @@ namespace RunOut.Core.GameObjects
             this.initialPosition = this.transform.position;
             this.Reset();
 
-            GameSceneController.AddGameObjectToList(this);
+            Tools.AddGameObjectToList(this);
         }
 
         public void Reset()
