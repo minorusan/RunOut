@@ -8,7 +8,6 @@ namespace RunOut.Core.Enemies
 {
     public class EnemyCannon : MonoBehaviour
     {
-
         public EnemyProjectile shot;
         // Update is called once per frame
         void Update()

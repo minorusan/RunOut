@@ -9,6 +9,7 @@ namespace RunOut.Utils
     class Constants
     {
         #region CameraController
+
         /// <summary>
         /// Defines how fast camera interpolates from pos to pos.
         /// </summary>
