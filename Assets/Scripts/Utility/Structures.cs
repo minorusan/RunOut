@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using RunOut.Core.GameObjects;
+using System;
+using System.Timers;
 
 namespace RunOut.Utils
 {
@@ -13,6 +12,12 @@ namespace RunOut.Utils
 
     public delegate void PlayerHealthChangedHadler(PlayerStatChangedEventArgs args, object sender);
 
+	public class MusicFromDeviceDataModel
+	{
+		public string SongName {get; set;}
+		public string FullPath {get; set;}
+	}
+
     public class PlayerStatChangedEventArgs : EventArgs
     {
         public int OldValue { get; set; }
@@ -21,83 +26,59 @@ namespace RunOut.Utils
 
     public class PlayerStats
     {
+        #region Private
         private static PlayerStats instance;
-        private const int kMaxPlayerHealth = 300;
-
         private int shieldValue;
         private int health;
+        #endregion
 
+        #region Events
         public event PlayerHealthChangedHadler PlayerHeathEventChanged;
-        public event PlayerHealthChangedHadler PlayerShieldEventChanged;
-
-
-        public bool IsShieldEnabled
-        {
-            get
-            {
-                return this.shieldValue > 0;
-            }
-            set
-            {
-                if (value == true)
-                {
-                    this.shieldValue = kMaxPlayerHealth;
-                }
-                else
-                {
-                    this.shieldValue = 0;
-                }
-            }
-        }
-
-        public bool IsImmune { get; set; }
+        public event PlayerHealthChangedHadler PlayerShieldEventChanged; 
+        #endregion
 
         PlayerStats()
         {
-           
-        }
 
-       
+        }
 
         public static PlayerStats GetInstance()
         {
             return instance == null ? instance = new PlayerStats() : instance;
         }
 
-        public int Health
+        public int HealthValue
         {
             get
             {
-                return health;
+                return this.health;
             }
 
             set
             {
                 if (this.PlayerHeathEventChanged != null)
                 {
-                    PlayerHeathEventChanged(new PlayerStatChangedEventArgs { OldValue = health, NewValue = value }, null);
+                    this.PlayerHeathEventChanged(new PlayerStatChangedEventArgs { OldValue = health, NewValue = value }, null);
                 }
                 var oldValue = health;
-                health = value;
-               
-                if (health > kMaxPlayerHealth)
+                this.health = value;
+
+                if (this.health > Constants.kMaxPlayerResilence)
                 {
-                    health = kMaxPlayerHealth;
+                    this.health = Constants.kMaxPlayerResilence;
                 }
 
-                if (health < 0)
+                if (this.health < 0)
                 {
-                    health = 0;
+                    this.health = 0;
                 }
                 if (this.PlayerHeathEventChanged != null)
                 {
-                    PlayerHeathEventChanged(new PlayerStatChangedEventArgs { OldValue = oldValue, NewValue = health }, null);
+                    this.PlayerHeathEventChanged(new PlayerStatChangedEventArgs { OldValue = oldValue, NewValue = this.health }, null);
                 }
 
             }
         }
-
-        public bool IsVampiricEnabled { get; set; }
 
         public int ShieldValue
         {
@@ -123,29 +104,70 @@ namespace RunOut.Utils
 
         internal void ResetPlayerStats()
         {
-            this.Health = kMaxPlayerHealth;
-            this.IsImmune = false;
+            this.HealthValue = Constants.kMaxPlayerResilence;
         }
     }
 
+
+    [Serializable]
     public class GameStats
     {
         private static GameStats instance;
+        private double gainedScore;
+        private Timer timer;
 
-        public double GainedScore { get; set; }
+        public bool IsSuperSpeedEnabled
+        {
+            get; private set;
+        }
 
         private GameStats()
         {
+            this.ScoreMultiplier = Constants.kDefaultScoreMultiplier;
+        }
+        
+        public void BeginSuperSpeedEffect(double superSpeedTimer = Constants.kDefaultSuperSpeedTime)
+        {
+            this.timer = new Timer();
+            this.timer.Interval = superSpeedTimer;
+            this.timer.Elapsed += OnSuperSpeedTimerElapsed;
+            MovingGameObject.speedModifier = Constants.kSuperSpeedConstant;
+            this.IsSuperSpeedEnabled = true;
+            this.timer.Start();
+        }
 
+        private void OnSuperSpeedTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            this.timer.Stop();
+            MovingGameObject.speedModifier = Constants.kDefaultSpeedModifier;
+            this.IsSuperSpeedEnabled = false;
+        }
+
+        /// <summary>
+        /// Gained score point is multiplied by that value on every score gaining tick.
+        /// </summary>
+        public double ScoreMultiplier { get; set; }
+
+        /// <summary>
+        /// Use ModifyScoreByValue to set or change
+        /// </summary>
+        public double GainedScore
+        {
+            get
+            {
+                return this.gainedScore;
+            }
+        }
+
+        public void ModifyScoreByValue(double value)
+        {
+            value *= this.ScoreMultiplier;
+            this.gainedScore += value;
         }
 
         public static GameStats GetInstance()
         {
             return instance == null ? instance = new GameStats() : instance;
         }
-
-
     }
-
-
 }

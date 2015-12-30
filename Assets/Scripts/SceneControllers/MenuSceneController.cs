@@ -2,30 +2,29 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using RunOut.Core.Utilities;
+using RunOut.Utils;
 
-public class MenuSceneController : MonoBehaviour {
+public class MenuSceneController : MonoBehaviour
+{ 
+    public Animator controller;
 
-	public Animator controller;
-
-
-	public void StartGame()
+    public void StartGame()
     {
-		this.controller.SetTrigger ("NewGameTouch");
-        //Application.LoadLevelAsync("Game");
+        this.controller.SetTrigger("NewGameTouch");
     }
 
-	public void LaunchNewGame()
-	{
-		SceneManager.LoadScene ("Game");
-	}
+    public void LaunchNewGame()
+    {
+        SceneManager.LoadScene(Strings.kSceneNameGame);
+    }
 
-	private void Update()
-	{
-		Tools.ManageGameObjects ();
-	}
+    private void Update()
+    {
+        Tools.ManageGameObjects();
+    }
 
-	private void OnDestroy()
-	{
-		Tools.ResetGameObjects ();
-	}
+    private void OnDestroy()
+    {
+        Tools.ResetGameObjects();
+    }
 }

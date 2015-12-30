@@ -9,7 +9,6 @@ using UnityEngine.Internal;
 public class BonusExplosionEffect : MonoBehaviour {
 
     public GameObject explosion;
-    public GameObject halo;
     public ParticleSystem explosionParticles;
     public Color effectColour;
 
@@ -29,8 +28,6 @@ public class BonusExplosionEffect : MonoBehaviour {
     {
         this.GetComponent<Done_DestroyByTime>().enabled = true;
         this.explosionParticles.startColor = this.effectColour;
-
-
         this.GetComponent<Light>().enabled = false;
        
         this.explosion.SetActive(true);

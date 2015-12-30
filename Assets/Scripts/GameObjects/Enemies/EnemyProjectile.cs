@@ -8,11 +8,6 @@ namespace RunOut.Core.Enemies
 {
     public class EnemyProjectile : MonoBehaviour
     {
-
-        private const float kBeginScreenChekingFromThisPoint = -2f;
-        public const float kDefaultSpeedModifier = 0f;
-        private const int kDefaultAcidDamage = 1;
-
         public static float speedModifier;
         public float objectMovementSpeed = 10f;
 
@@ -55,7 +50,7 @@ namespace RunOut.Core.Enemies
 
             this.transform.position = movementVector;
 
-            if (this.transform.position.x < kBeginScreenChekingFromThisPoint)
+            if (this.transform.position.x < Constants.kBeginScreenChekingFromThisPoint)
                 this.CheckOutOfScreen();
         }
 
@@ -64,7 +59,7 @@ namespace RunOut.Core.Enemies
             Instantiate(this.acidExplosion, this.transform.position, this.transform.rotation);
             if (target.gameObject.tag.Equals(Strings.kPLayerTag))
             {
-                Tools.DamagePlayer(kDefaultAcidDamage);
+                Tools.DamagePlayer(Constants.kDefaultEnemyProjectileDamage);
             }
         }
 

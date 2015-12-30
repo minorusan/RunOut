@@ -5,13 +5,12 @@ using RunOut.Utils;
 
 public class HealthKitBonus : MonoBehaviour
 {
-    private const int kDefaultHealthBonusValue = 50;
-
+    
     private void OnCollisionEnter(Collision target)
     {
         if (target.gameObject.tag.Equals(Strings.kPLayerTag))
         {
-            PlayerStats.GetInstance().Health += kDefaultHealthBonusValue;
+            PlayerStats.GetInstance().HealthValue += Constants.kDefaultHealthBonusValue;
             this.gameObject.SetActive(false);
         }
     }

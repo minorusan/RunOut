@@ -10,5 +10,10 @@ namespace RunOut.Utils
         public const string kPLayerTag = "Player";
         public const string kHorizontalAxisName = "Horizontal";
         public const string kVerticalAxisName = "Vertical";
+
+        #region Scene names
+        public const string kSceneNameMain = "Main";
+        public const string kSceneNameGame = "Game"; 
+        #endregion
     }
 }

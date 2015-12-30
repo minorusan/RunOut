@@ -8,13 +8,8 @@ namespace RunOut.Core.Enemies
 {
     public class EnemyAI : MonoBehaviour
     {
-
-        private const float kDefaultEnemyTrackingSpeed = 0.1f;
-        private const float kDefaultActivityTime = 6f;
-
-
-        public float EnemyTrakingSpeedModifier = kDefaultEnemyTrackingSpeed;
-        public float ActivityTime = kDefaultActivityTime;
+        public float EnemyTrakingSpeedModifier = Constants.kDefaultEnemyTrackingSpeed;
+        public float ActivityTime = Constants.kDefaultActivityTime;
 
         private Rigidbody body;
         private float previousVelocity;
