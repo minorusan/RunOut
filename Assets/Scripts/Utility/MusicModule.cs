@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 using RunOut.Utils;
 
-namespace AssemblyCSharp
+namespace RunOut.Utils
 {
 	public class MusicModule
 	{
@@ -52,9 +52,15 @@ namespace AssemblyCSharp
 				{
 					foreach (string f in Directory.GetFiles(d, "*.mp3")) 
 					{
-						var songName = f.Split('/')[f.Split('/').Length];
-						var song = new MusicFromDeviceDataModel(){FullPath = f, SongName = songName};
-						this.audioFilesInDir.Add(song);
+                        char charToSeparate = '\\';
+
+#if UNITY_EDITOR
+                        charToSeparate = '\\';
+#elif UNITY_ANDROID
+                         charToSeparate = '/';
+#endif
+                        var song = new MusicFromDeviceDataModel() { FullPath = f, SongName = f.Substring(f.LastIndexOf(charToSeparate)+1).Replace(".mp3", "")};
+                        this.audioFilesInDir.Add(song);
 					}
 					DirSearch(d);
 				}

@@ -16,9 +16,11 @@ namespace RunOut.Core.Utilities
         #region Private
         static GameObject bonus;
         private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
-		#endregion
+        #endregion
 
-		public static void ResetGameObjects()
+        public static MusicFromDeviceDataModel SelectedSong { get; set; }
+
+        public static void ResetGameObjects()
 		{
 			gameObjects = new List<MovingGameObject> ();
 		}

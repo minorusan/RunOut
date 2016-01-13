@@ -11,13 +11,20 @@ namespace RunOut.Utils
     }
 
     public delegate void PlayerHealthChangedHadler(PlayerStatChangedEventArgs args, object sender);
+    public delegate void SongSelectedHandler(SongSelectedEventArgs args, object sender);
 
-	public class MusicFromDeviceDataModel
-	{
-		public string SongName {get; set;}
-		public string FullPath {get; set;}
-	}
+    public class MusicFromDeviceDataModel
+    {
+        public string SongName { get; set; }
+        public string FullPath { get; set; }
+    }
 
+
+    public class SongSelectedEventArgs : EventArgs
+    {
+        public MusicFromDeviceDataModel Song  { get; set; }
+       
+    }
     public class PlayerStatChangedEventArgs : EventArgs
     {
         public int OldValue { get; set; }
@@ -34,7 +41,7 @@ namespace RunOut.Utils
 
         #region Events
         public event PlayerHealthChangedHadler PlayerHeathEventChanged;
-        public event PlayerHealthChangedHadler PlayerShieldEventChanged; 
+        public event PlayerHealthChangedHadler PlayerShieldEventChanged;
         #endregion
 
         PlayerStats()
@@ -125,7 +132,7 @@ namespace RunOut.Utils
         {
             this.ScoreMultiplier = Constants.kDefaultScoreMultiplier;
         }
-        
+
         public void BeginSuperSpeedEffect(double superSpeedTimer = Constants.kDefaultSuperSpeedTime)
         {
             this.timer = new Timer();

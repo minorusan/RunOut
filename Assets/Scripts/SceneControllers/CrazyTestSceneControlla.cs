@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using AssemblyCSharp;
 using UnityEngine.UI;
 using System.Linq;
+using RunOut.Utils;
 
 public class CrazyTestSceneControlla : MonoBehaviour {
 
@@ -14,15 +14,16 @@ public class CrazyTestSceneControlla : MonoBehaviour {
 	private AudioClip clip;
 
 	// Use this for initialization
-	void Start () {
-	
-	}
 
-	void Update () 
-	{
-		
-	}
 
+    private void LateUpdate()
+    {
+        if (clip != null && clip.loadState == AudioDataLoadState.Loaded && !someAoudio.isPlaying)
+        {
+            someAoudio.clip = clip;
+            someAoudio.Play();
+        }
+    }
 
 	public void CheckOutDir()
 	{
@@ -33,6 +34,7 @@ public class CrazyTestSceneControlla : MonoBehaviour {
 	
 		lastError.text = musicModule.lastError;
 		var resultString = "";
+
 		foreach (var dir in musicModule.GetCurrentDirFolder(input.text))
 		{
 			resultString += dir.ToString() + "\n";
@@ -49,25 +51,24 @@ public class CrazyTestSceneControlla : MonoBehaviour {
 		} 
 
 		lastError.text = musicModule.lastError;
-		var audios = musicModule.GetAudioFilesInDir ();
+        Debug.Log("Began to fetch audio");
 
-		var resultString = "";
-		if (audios != null && audios.Count > 0) {
-			foreach (var dir in audios) {
-				resultString += dir.SongName.ToString () + "\n";
+		var audios = musicModule.GetAudioFilesInDir ();
+        Debug.Log("Ended fetching audio");
+        var resultString = "";
+		if (audios != null && audios.Count > 0)
+        {
+			foreach (var dir in audios)
+            {
+				resultString += dir.SongName + "\n";
 			}
 
 			someAoudio.Stop ();
 			this.text.text = resultString;
 
-			var songName = audios.FirstOrDefault ().FullPath;
+            var songName = audios.FirstOrDefault();//.FullPath;
 
-			clip = string.IsNullOrEmpty (songName) ? null : new WWW ("file://" + songName).GetAudioClip (false, true);
-
-			if (clip != null && !someAoudio.isPlaying) {
-				someAoudio.clip = clip;
-				someAoudio.Play ();
-			}
+			clip = string.IsNullOrEmpty (songName.FullPath) ? null : new WWW ("file://" + songName.FullPath).GetAudioClip (false, true);
 		}
 		else 
 		{

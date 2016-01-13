@@ -15,7 +15,7 @@ namespace RunOut.Core.GameObjects.Bonuses
         {
             if (target.gameObject.tag.Equals(Strings.kPLayerTag))
             {
-                this.GetComponent<AudioSource>().PlayOneShot(this.bonusTakeSound);
+                GetComponent<AudioSource>().PlayOneShot(this.bonusTakeSound);
                 Instantiate(this.bloodEffect, PlayerMovementController.PlayerPosition, Quaternion.Euler(Vector3.zero));
                 AudioSource.PlayClipAtPoint(this.bonusTakeSound, this.transform.position);
 

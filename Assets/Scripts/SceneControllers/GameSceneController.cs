@@ -18,10 +18,23 @@ namespace RunOut.Core.Controllers
         public GameObject speedStars;
         public BarSizeChanger healthBar;
         public BarSizeChanger shieldBar;
+        public AudioSource someAoudio;
 
         #region Private
         private static List<MovingGameObject> gameObjects = new List<MovingGameObject>();
+        private AudioClip clip;
+        
         #endregion
+
+        private void LateUpdate()
+        {
+            GameStats.GetInstance().ModifyScoreByValue(Constants.kDefaultScoreGain);
+            if (clip != null && clip.loadState == AudioDataLoadState.Loaded && !someAoudio.isPlaying)
+            {
+                someAoudio.clip = clip;
+                someAoudio.Play();
+            }
+        }
 
         private void Start()
         {
@@ -29,6 +42,11 @@ namespace RunOut.Core.Controllers
             {
                 this.shieldBar.UpdateWithValue(1);
 			}
+
+            var song = Tools.SelectedSong;
+
+            clip = string.IsNullOrEmpty(song.FullPath) ? null : new WWW("file://" + song.FullPath).GetAudioClip(false, true);
+
             PlayerStats.GetInstance().ResetPlayerStats();
             PlayerStats.GetInstance().PlayerHeathEventChanged += GameSceneController_PlayerHeathEventChanged;
             PlayerStats.GetInstance().PlayerShieldEventChanged += GameSceneController_PlayerShieldEventChanged;
@@ -56,10 +74,7 @@ namespace RunOut.Core.Controllers
             }
         }
 
-        private void LateUpdate()
-        {
-            GameStats.GetInstance().ModifyScoreByValue(Constants.kDefaultScoreGain);
-        }
+      
 
 		private void OnDestroy()
 		{

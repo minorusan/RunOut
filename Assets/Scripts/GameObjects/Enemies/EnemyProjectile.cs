@@ -26,9 +26,6 @@ namespace RunOut.Core.Enemies
             this.body.AddForce(new Vector3(-this.objectMovementSpeed, 0), ForceMode.VelocityChange);
         }
 
-
-
-
         private void FixedUpdate()
         {
             Vector3 movementVector = Vector3.zero;
